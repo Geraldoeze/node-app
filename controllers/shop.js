@@ -49,14 +49,8 @@ exports.getCart = (req, res, next) => {
       products: cartProducts
       });
     }, 500)
-    
-    
     })
-  
   });
- 
-
-
 };
 
 exports.postCart = (req, res, next) => {
@@ -72,12 +66,12 @@ exports.postCartDeleteProduct = (req, res, next) => {
   Product.findById(prodId, (product) => {
       Cart.deleteProduct(prodId, product.price);
   })
-      res.redirect('/cart')
+      res.redirect('/cart') 
 } 
 
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
-    path: '/orders',
+    path: '/orders', 
     pageTitle: 'Your Orders'
   });
 };
