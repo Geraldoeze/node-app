@@ -1,10 +1,5 @@
-const mysql = require('mysql');
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'node-complete',
-    password: 'root'
-});
 
-module.exports = pool.promise()
+MongoClient.connect("mongodb+srv://gerald:<password>@node-cluster.uktzq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
