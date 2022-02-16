@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Cart = require('../models/cart');
+const User = require('../models/User');
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -42,13 +43,15 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   Cart.getCart(cart => {
-    Product.fetchAll(products => {
+    User.addToCart()
+    .then(user => {
       const cartProducts = [];
-       for (let product of products) {
-        const cartProductData = cart.products.find(prod => prod.id === product.id);
-        if(cartProductData) {
-          cartProducts.push({productData: product, qty: cartProductData.qty})
-      }}
+      for (let item of user) {
+         console.log(item)
+        // const cartProductData = cart.products.find(prod => prod.id === product.id);
+        // if(cartProductData) {
+        //   cartProducts.push({productData: product, qty: cartProductData.qty})
+      }
      setTimeout( function(){
       res.render('shop/cart', {
       path: '/cart',
@@ -56,7 +59,7 @@ exports.getCart = (req, res, next) => {
       products: cartProducts
       });
     }, 500)
-    })
+  })
   });
 };
 
