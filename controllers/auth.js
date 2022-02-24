@@ -18,7 +18,7 @@ exports.getSignup = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
   User.findById('620d24db76a055c8f590cf6b')
-    .then(user => {
+    .then(user => { 
       req.session.isLoggedIn = true;
       req.session.user = user;
       req.session.save(err => {
