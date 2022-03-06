@@ -37,20 +37,23 @@ exports.getLogin = (req, res, next) => {
 
 exports.getSignup = (req, res, next) => {
   let message = req.flash('error');
+  
   if (message.length > 0) {
     message = message[0];
+    console.log(message)
   } else {
     message = null;
   }
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
-    errorMessage: message,
+    errorMessage: false,
     oldInput: {
       email: '',
       password: '',
       confirmPassword: ''
-    }
+    },
+    validationErrors: []
   });
 };
 
