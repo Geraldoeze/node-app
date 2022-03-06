@@ -2,19 +2,19 @@ const crypto = require('crypto');
 
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
-const { validationResult } = require('express-validator/check');
+
+const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-        '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'
-    }
-  })
-);
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  auth: {
+    user: 'd.gallant650@gmail.com',
+    pass: 'D.gallant701',
+  },
+});
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
@@ -113,11 +113,11 @@ exports.postLogin = (req, res, next) => {
           res.redirect('/login');
         });
     })
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
+    // .catch(err => {
+    //   const error = new Error(err);
+    //   error.httpStatusCode = 500;
+    //   return next(error);
+    // });
 };
 
 exports.postSignup = (req, res, next) => {
@@ -132,7 +132,7 @@ exports.postSignup = (req, res, next) => {
       pageTitle: 'Signup',
       errorMessage: errors.array()[0].msg,
       oldInput: {
-        email: email,
+        email: email, 
         password: password,
         confirmPassword: req.body.confirmPassword
       },
@@ -159,11 +159,11 @@ exports.postSignup = (req, res, next) => {
       //   html: '<h1>You successfully signed up!</h1>'
       // });
     })
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
+    // .catch(err => {
+    //   const error = new Error(err);
+    //   error.httpStatusCode = 500;
+    //   return next(error);
+    // });
 };
 
 exports.postLogout = (req, res, next) => {
@@ -216,11 +216,11 @@ exports.postReset = (req, res, next) => {
           `
         });
       })
-      .catch(err => {
-        const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-      });
+      // .catch(err => {
+      //   const error = new Error(err);
+      // error.httpStatusCode = 500;
+      // return next(error);
+      // });
   });
 };
 
@@ -273,9 +273,9 @@ exports.postNewPassword = (req, res, next) => {
     .then(result => {
       res.redirect('/login');
     })
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
+    // .catch(err => {
+    //   const error = new Error(err);
+    //   error.httpStatusCode = 500;
+    //   return next(error);
+    // });
 };

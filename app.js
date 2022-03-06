@@ -46,6 +46,7 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+const { mongoConnect } = require('./util/database');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({storage: fileStorage, fileFilter: fileFilter }).single('image'))
@@ -72,7 +73,7 @@ app.use((req, res, next) => {
       next();
     })
     .catch(err => {
-      throw new Error(err)
+      // throw new Error(err)
     });
 });
 
@@ -85,21 +86,16 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
-app.get('/500', errorController.get500)
+// app.get('/500', errorController.get500)
 
 app.use(errorController.get404);
 
-//Express special kinf=d of middleware
-app.use((error, req, res, next) => {
-  res.redirect('/500');
-});
+//Express special kind of middleware
+// app.use((error, req, res, next) => {
+//   res.redirect('/500');
+// });
 
 
-mongoose
-  .connect(MONGODB_URI)
-  .then(result => {
-    app.listen(3500);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+mongoConnect((client) => {
+  app.listen(3500)
+})

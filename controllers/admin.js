@@ -1,4 +1,4 @@
-const  { validationResult } = require('express-validator/check');
+// const  { validationResult } = require('express-validator/check');
 
 const Product = require('../models/product');
 
@@ -12,12 +12,13 @@ exports.getAddProduct = (req, res, next) => {
     validationErrors: []
   });
 };
-
+  
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const image = req.file;
+  const imageUrl = req.file;
   const price = req.body.price;
   const description = req.body.description;
+  console.log(req.body)
   if (!image) {
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product',
@@ -53,7 +54,7 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
 
-  const imageUrl = image.path;
+  // const imageUrl = image.path;
 
   const product = new Product({
     title: title,
@@ -83,9 +84,9 @@ exports.postAddProduct = (req, res, next) => {
       //   errorMessage: errors.array()[0].msg,
       //   validationErrors: []
       //});      
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
+      // const error = new Error(err);
+      // error.httpStatusCode = 500;
+      // return next(error);
 
     });
 };
