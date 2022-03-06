@@ -15,10 +15,10 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.file;
+  const image = req.file;
   const price = req.body.price;
   const description = req.body.description;
-  console.log(imageUrl)
+  console.log(req.body)
 
   if (!image) {
     return res.status(422).render('admin/edit-product', {
@@ -55,7 +55,7 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
 
-  // const imageUrl = image.path;
+  const imageUrl = image.path;
 
   const product = new Product({
     title: title,
