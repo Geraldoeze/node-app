@@ -28,12 +28,15 @@ const fileStorage = multer.diskStorage({
     cb(null, 'images');
   },
   filename:(req, file, cb) => {
-    cb(null, file.filename + '_' + file.originalname);
+    cb(null, file.filename + '-' + file.originalname);
   }
 });
 
 const fileFilter = (req, file, cb) => {
-  if ( file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+  if ( 
+    file.mimetype === 'image/png' || 
+    file.mimetype === 'image/jpg' || 
+    file.mimetype === 'image/jpeg'){
   cb(null, true);
   } else {
   cb(null, false);
@@ -46,10 +49,10 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
-const { mongoConnect } = require('./util/database');
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({storage: fileStorage, fileFilter: fileFilter }).single('image'))
+app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(
@@ -73,7 +76,7 @@ app.use((req, res, next) => {
       next();
     })
     .catch(err => {
-      // throw new Error(err)
+       throw new Error(err)
     });
 });
 
@@ -86,16 +89,22 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
-// app.get('/500', errorController.get500)
+app.get('/500', errorController.get500)
 
 app.use(errorController.get404);
 
-//Express special kind of middleware
-// app.use((error, req, res, next) => {
-//   res.redirect('/500');
-// });
+// Express has a special kind of middleware
+app.use((error, req, res, next) => {
+  res.redirect('/500');
+});
 
+mongoose
+  .connect(MONGODB_URI)
+  .then(result => {
+    console.log('Connected')
+    app.listen(3500);
+  })
+  .catch(err => {
+    console.log(err);
+  })
 
-mongoConnect((client) => {
-  app.listen(3500)
-})

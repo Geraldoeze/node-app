@@ -1,4 +1,4 @@
-// const  { validationResult } = require('express-validator/check');
+const  { validationResult } = require('express-validator');
 
 const Product = require('../models/product');
 
@@ -10,15 +10,16 @@ exports.getAddProduct = (req, res, next) => {
     hasError: false,
     errorMessage: null,
     validationErrors: []
-  });
+  }); 
 };
-  
+
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const imageUrl = req.file;
   const price = req.body.price;
   const description = req.body.description;
-  console.log(req.body)
+  console.log(imageUrl)
+
   if (!image) {
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product',
