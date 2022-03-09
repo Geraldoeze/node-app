@@ -41,7 +41,7 @@ exports.getProduct = (req, res, next) => {
       error.httpStatusCode = 500;
       return next(error);
     });
-};
+}; 
 
 exports.getIndex = (req, res, next) => {
   const page = req.query.page;
@@ -98,17 +98,17 @@ exports.postCart = (req, res, next) => {
     });
 };
 
-exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-  req.user
-    .removeFromCart(prodId)
-    .then(result => {
-      res.redirect('/cart');
-    })
-    .catch(err => {
-     console.log(err)
-    });
-};
+// exports.postCartDeleteProduct = (req, res, next) => {
+//   const prodId = req.body.productId;
+//   req.user
+//     .removeFromCart(prodId)
+//     .then(result => {
+//       res.redirect('/cart');
+//     })
+//     .catch(err => {
+//      console.log(err)
+//     });
+// };
 
 exports.postOrder = (req, res, next) => {
   req.user
