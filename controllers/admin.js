@@ -201,7 +201,7 @@ exports.postDeleteProduct = (req, res, next) => {
   .then(() => {
     console.log('DESTROYED PRODUCT');
     res.redirect('/admin/products');
-  })
+  }) 
   .catch(err => {
     const error = new Error(err);
     error.httpStatusCode = 500;
