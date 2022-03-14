@@ -49,4 +49,3 @@ router.post('/edit-product',
 router.delete('/product/:productId', isAuth, adminController.deleteProduct);
 
 module.exports = router;
-S
