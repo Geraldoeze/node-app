@@ -21,6 +21,8 @@ const store = new MongoDBStore({
   collection: 'sessions'
 }); 
 
+const tryer ;
+
 const csrfProtection = csrf();
 
 const fileStorage = multer.diskStorage({
