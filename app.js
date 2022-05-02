@@ -19,9 +19,11 @@ const User = require('./models/user');
 const MONGODB_URI =
 "mongodb+srv://gerald:GZ3r0pV0toPBWmCV@node-cluster.uktzq.mongodb.net/shop?retryWrites=true&w=majority";
 
+const URI = 'mongodb://127.0.0.1:27017/node-app'
+
 const app = express();
 const store = new MongoDBStore({
-  uri: MONGODB_URI,
+  uri: URI,
   collection: 'sessions'
 }); 
 
@@ -111,7 +113,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(URI)
   .then(result => {
     console.log('Connected')
     app.listen(3500);
