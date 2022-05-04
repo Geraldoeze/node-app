@@ -5,17 +5,16 @@ const PDFDocument = require('pdfkit');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
+const ITEMS_PER_PAGE = 2;
 
-const ITEMS_PER_PAGE = 1;
-
-exports.getProducts = (req, res, next) => {
-  Product.find()
-    .then(products => {
-      res.render('shop/product-list', {
-        prods: products,
-        pageTitle: 'All Products',
-        path: '/products',
-        isAuthenticated: req.session.isLoggedIn
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  Product.findById(prodId)
+    .then(product => {
+      res.render('shop/product-detail', {
+        product: product,
+        pageTitle: product.title,
+        path: '/products'
       });
     })
     .catch(err => {
@@ -25,7 +24,7 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-exports.getProduct = (req, res, next) => {
+exports.getProducts = (req, res, next) => {
   const page = +req.query.page || 1;
   let totalItems;
   
@@ -83,7 +82,7 @@ exports.getIndex = (req, res, next) => {
     .catch(err => {
     console.log(err)
       const error = new Error(err);
-      error.httpStatusCode = 500;
+      error.httpStatusCode = 500; 
       return next(error);
     });
 };
