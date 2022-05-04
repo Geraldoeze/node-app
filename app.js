@@ -16,14 +16,16 @@ const morgan = require('morgan');
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const MONGODB_URI =
-"mongodb+srv://gerald:GZ3r0pV0toPBWmCV@node-cluster.uktzq.mongodb.net/shop?retryWrites=true&w=majority";
+console.log(process.env.NODE_ENV);
+
+const MONGODB_URI ='mongodb://127.0.0.1:27017/node-app'
+// `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@node-cluster.uktzq.mongodb.net/${process.env.MONGO_DEFAULT_DATADASE}?retryWrites=true&w=majority`;
 
 const URI = 'mongodb://127.0.0.1:27017/node-app'
 
 const app = express();
 const store = new MongoDBStore({
-  uri: URI,
+  uri: MONGODB_URI,
   collection: 'sessions'
 }); 
 
@@ -69,14 +71,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
-// app.use(
-//   session({
-//     secret: 'my secret',
-//     resave: false,
-//     saveUninitialized: false,
-//     store: store
-//   })
-// );
+app.use(
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+  })
+);
 app.use(csrfProtection);
 app.use(flash());
 
@@ -113,10 +115,10 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(URI)
+  .connect(MONGODB_URI)
   .then(result => {
     console.log('Connected')
-    app.listen(3500);
+    app.listen(process.env.PORT || 3500);
   })
   .catch(err => {
     console.log(err);

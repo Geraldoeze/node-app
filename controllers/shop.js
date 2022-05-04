@@ -81,6 +81,7 @@ exports.getIndex = (req, res, next) => {
     });
   })
     .catch(err => {
+    console.log(err)
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -90,7 +91,7 @@ exports.getIndex = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
-  //   .execPopulate()
+    .execPopulate()
     .then(user => {
       const products = user.cart.items;
       res.render('shop/cart', {
@@ -110,7 +111,6 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
-  console.log(prodId)
   Product.findById(prodId)
     .then(product => {
       return req.user.addToCart(product);
@@ -118,6 +118,11 @@ exports.postCart = (req, res, next) => {
     .then(result => {
       console.log(result);
       res.redirect('/cart');
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 

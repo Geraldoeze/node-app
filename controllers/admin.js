@@ -19,7 +19,7 @@ exports.postAddProduct = (req, res, next) => {
   const image = req.file;
   const price = req.body.price;
   const description = req.body.description;
-  console.log(req.body)
+
 
   if (!image) {
     return res.status(422).render('admin/edit-product', {
@@ -176,7 +176,7 @@ exports.getProducts = (req, res, next) => {
     // .select('title price -_id')
     // .populate('userId', 'name')
     .then(products => {
-      console.log(products);
+      
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
