@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -18,8 +19,8 @@ const User = require('./models/user');
 
 console.log(process.env.NODE_ENV);
 
-const MONGODB_URI ='mongodb://127.0.0.1:27017/node-app'
-// `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@node-cluster.uktzq.mongodb.net/${process.env.MONGO_DEFAULT_DATADASE}?retryWrites=true&w=majority`;
+const MONGODB_URI =
+ `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@node-cluster.uktzq.mongodb.net/${process.env.MONGO_DEFAULT_DATADASE}?retryWrites=true&w=majority`;
 
 const URI = 'mongodb://127.0.0.1:27017/node-app'
 
@@ -29,8 +30,11 @@ const store = new MongoDBStore({
   collection: 'sessions'
 }); 
 
-
 const csrfProtection = csrf();
+
+// const privateKey = fs.readFileSync('server.key');
+// const certificate = fs.readFileSync('server.cert');
+
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -118,6 +122,7 @@ mongoose
   .connect(MONGODB_URI)
   .then(result => {
     console.log('Connected')
+    // https.createServer({key: privateKey, cert: certificate} , app)
     app.listen(process.env.PORT || 3500);
   })
   .catch(err => {
