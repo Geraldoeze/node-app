@@ -13,6 +13,7 @@
       { "src": "/(.*)", "dest": "/app.js" }
   ],
   "scripts": {
+    "build": "node build app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production MONGO_USER=gerald MONGO_PASSWORD=GZ3r0pV0toPBWmCV MONGO_DEFAULT_DATABASE=shop node app.js",
     "start-server": "node app.js",
