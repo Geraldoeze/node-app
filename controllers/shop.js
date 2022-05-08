@@ -59,26 +59,15 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
+
 exports.getCart = (req, res, next) => {
-  req.user
-    .populate('cart.items.productId')
-    .execPopulate()
-    .then(user => {
-      const products = user.cart.items;
-      res.render('shop/cart', {
-        path: '/cart',
-        pageTitle: 'Your Cart',
-        products: products,
-        isAuthenticated: req.session.isLoggedIn
-      });
-    })
-    
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
+  
+    res.render('shop/cart', {
+     
     });
-};
+  
+  };
+
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
@@ -87,7 +76,6 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-      console.log(result);
       res.redirect('/cart');
     })
     .catch(err => {

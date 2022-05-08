@@ -19,7 +19,7 @@ const User = require('./models/user');
 
 console.log(process.env.NODE_ENV);
 
-const MONGODB_URI =
+const MONGODB_URI = 
  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@node-cluster.uktzq.mongodb.net/${process.env.MONGO_DEFAULT_DATADASE}?retryWrites=true&w=majority`;
 
 const URI = 'mongodb://127.0.0.1:27017/node-app'
