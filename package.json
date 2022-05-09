@@ -2,22 +2,16 @@
   "name": "node-app",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "engines": {
     "node": "14.x"
   },
-   "builds": [
-      { "src": "app.js", "use": "@vercel/node" }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "/app.js" }
-  ],
+ 
   "scripts": {
-    "build": "node build app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production MONGO_USER=gerald MONGO_PASSWORD=GZ3r0pV0toPBWmCV MONGO_DEFAULT_DATABASE=shop node app.js",
-    "start-server": "node app.js",
-    "start:dev": "nodemon app.js"
+    "start": "MONGO_USER=gerald MONGO_PASSWORD=GZ3r0pV0toPBWmCV MONGO_DEFAULT_DATABASE=shop node index.js",
+    "start-server": "node index.js",
+    "start:dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
