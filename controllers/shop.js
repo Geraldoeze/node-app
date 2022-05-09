@@ -5,7 +5,6 @@ const PDFDocument = require('pdfkit');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
-const ITEMS_PER_PAGE = 2;
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
